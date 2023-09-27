@@ -43,6 +43,18 @@
     --global-color-neutral-900: #35374d;
     --global-color-neutral-950: #20223a;
 
+    /* global inputs variables */
+    --global-input-backgroundColor: White;
+    --global-input-color: var(--global-color-neutral-950);
+    --global-input-borderColor: var(--global-color-neutral-100);
+    --global-input-hover-borderColor: var(--global-color-neutral-200);
+    --global-input-active-borderColor: var(--global-color-primary-500);
+    --global-input-focus-borderColor: var(--global-color-primary-500);
+    --global-input-box-shadow: var(--global-color-primary-500-alpha-30);
+    --global-input-borderWidth: var(--global-borderWidth);
+
+    --transition-alpha: .2s ease;
+
     /* border stuff */
     --global-borderRadius: 3px;
     --global-borderWidth: 1px;
@@ -67,6 +79,14 @@
     /*  = 48px */
     --global-whitespace-xxl: calc(var(--global-whitespace) * 3);
     /*  = 72px */
+
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --global-input-backgroundColor: var(--global-color-neutral-800);
+        --global-input-color: var(--global)
+    }
 }
 
 /*---------------------------------------/*
@@ -556,10 +576,10 @@ input::placeholder {
     -moz-appearance: none;
     appearance: none;
     width: 100%;
-    border: var(--global-borderWidth) solid var(--global-color-neutral-100);
+    border: var(--global-input-borderWidth) solid var(--global-input-borderColor);
     border-radius: var(--global-borderRadius);
-    color: var(--global-color-neutral-950);
-    background-color: White;
+    color: var(--global-input-color);
+    background-color: var(--global-input-backgroundColor);
     font-family: inherit;
     font-size: 1rem;
     line-height: calc(var(--global-baseline) * 3);
@@ -568,13 +588,13 @@ input::placeholder {
     transition: border var(--global-transition-timing-alpha);
 
     &:hover {
-        border-color: var(--global-color-neutral-200);
+        border-color: var(--global-input-hover-borderColor);
     }
 
     &:focus,
     &:active {
-        border-color: var(--global-color-primary-500);
-        box-shadow: 0 0 0 3px var(--global-color-primary-500-alpha-30);
+        border-color: var(--global-input-active-borderColor);
+        box-shadow: 0 0 0 3px var(--global-input-box-shadow);
     }
 }
 
@@ -635,14 +655,185 @@ input::placeholder {
     }
 }
 
+/* custom checkbox & radio */
+
+.c-option--hidden+.c-custom-option .c-custom-option__symbol {
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+
+.c-option--hidden:checked+.c-custom-option .c-custom-option__symbol {
+    opacity: 1;
+    transition: opacity .2s ease-in;
+    border-color: var(--global-color-primary-500-alpha-30);
+}
+
+.c-option--hidden:focus+.c-custom-option .c-custom-option__fake-input {
+    box-shadow: 0 0 0 3px var(--global-input-box-shadow);
+    transition: opacity .2s ease-in;
+}
+
+.c-custom-option__fake-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1rem;
+    height: 1rem;
+    border: var(--global-borderWidth) solid var(--global-input-borderColor);
+    margin-right: .5rem;
+}
+
+.c-option--hidden:checked+.c-label--option .c-custom-option__fake-input {
+    border: var(--global-borderWidth) solid var(--global-color-primary-500-alpha-75);
+}
+
+.c-option--hidden:hover+.c-label--option .c-custom-option__fake-input {
+    border: var(--global-borderWidth) solid var(--global-input-hover-borderColor);
+}
+
+.c-custom-option__fake-input--checkbox {
+    border-radius: var(--global-borderRadius);
+}
+
+.c-custom-option__fake-input--radio {
+    border-radius: 100%;
+}
+
+.c-custom-option {
+    display: flex;
+}
+
+.c-custom-option__fake-input--checkbox .c-custom-option__symbol {
+    width: 10px;
+    height: 10px;
+    fill: var(--global-color-primary-500-alpha-75);
+}
+
+.c-custom-option__fake-input--radio .c-custom-option__symbol {
+    width: 6px;
+    height: 6px;
+    background-color: var(--global-color-primary-500-alpha-75);
+    border-radius: 100%;
+}
+
+.c-option-list, .c-custom-toggle-list {
+    margin-bottom: 1.5rem;
+}
+
+.c-option-list__item, .c-custom-toggle-list__item {
+    margin-bottom: .75rem;
+}
+
+.c-custom-toggle__fake-input {
+    --toggle-background: var(--global-color-neutral-050);
+    display: block;
+    width: 3rem;
+    height: 1.5rem;
+    border: var(--global-borderWidth) solid var(--global-input-borderColor);
+    border-radius: 1.5rem;
+    background-color: var(--toggle-background);
+
+    &:focus {
+        transition: all var(--transition-alpha);
+        box-shadow: 0 0 0 3px var(--global-input-box-shadow);
+        /* werkt niet */
+    }
+
+    &:checked {
+        border-color: var(--global-color-primary-500-alpha-75);
+        /* werkt niet */
+    }
+}
+
+.c-custom-toggle__fake-input::after {
+    content: "";
+    display: block;
+    width: 1.375rem;
+    height: 1.375rem;
+    border: var(--global-borderWidth) solid var(--global-input-borderColor);
+    border-radius: 100%;
+    background-color: var(--global-input-backgroundColor);
+    transition: all var(--transition-alpha);
+    
+}
+
+.c-option--hidden:active+.c-custom-toggle .c-custom-toggle__fake-input::after {}
+
+
+.c-option--hidden:checked+.c-custom-toggle .c-custom-toggle__fake-input {
+    background-color: var(--global-color-primary-500-alpha-75);
+    transition: all var(--transition-alpha);
+    
+    &::after {
+        transform: translateX(24px);
+        border-color: var(--global-color-primary-500-alpha-75);
+    }
+}
+
+.c-custom-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.c-custom-select {
+    position: relative;
+}
+
+.c-custom-select__input {
+    border: var(--global-borderWidth) solid var(--global-input-borderColor);
+    border-radius: var(--global-borderRadius);
+    width: 100%;
+    
+    &:active {
+        border: var(--global-borderWidth) solid var(--global-input-borderColor);
+        box-shadow: 0 0 0 3px var(--global-input-box-shadow);
+    }
+    &:focus {
+        box-shadow: 0 0 0 3px var(--global-input-box-shadow);
+        border: var(--global-borderWidth) solid var(--global-input-borderColor);
+    }
+}
+
+.c-custom-select__symbol {
+    position: absolute;
+    right: -2px;
+    width: 24px;
+    pointer-events: none;
+}
+
+/* ----------- */
+
+.c-password-toggle-container {
+    position: relative;
+}
+.c-password-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.c-password-toggle__label:checked {
+    border: hotpink solid thick;
+    z-index: 1;
+}
+
+.c-password-toggle__symbol {
+    width: 12px;
+    position: absolute;
+    right: 1rem;
+    pointer-events: fill;
+}
+
+
 /*------------------------------------*\
 #UTILITIES
 \*------------------------------------*/
 
 /*
-    Utilities: color
-    ---
-    Utility classes to put specific colors onto elements
+Utilities: color
+---
+Utility classes to put specific colors onto elements
 */
 
 .u-color-neutral-500 {
