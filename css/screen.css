@@ -84,8 +84,27 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --global-input-backgroundColor: var(--global-color-neutral-800);
-        --global-input-color: var(--global)
+        --global-page-background: var(--global-color-neutral-950);
+        --global-page-color: var(--global-color-neutral-050);
+
+        --global-card-background: var(--global-color-neutral-900);
+
+        --global-link-color: var(--global-color-primary-500);
+        --global-link-hover-focus-color: var(--global-color-primary-400);
+        --global-link-active-color: var(--global-color-primary-600);
+        
+        --global-input-backgroundColor: var(--global-color-neutral-950);
+        --global-input-color: var(--global-color-neutral-050);
+        --global-input-label-color: var(--global-color-neutral-300);
+        --global-input-placeholder-color: var(--global-color-neutral-600);
+        --global-input-borderColor: var(--global-color-neutral-950);
+        --global-input-hover-borderColor: var(--global-color-neutral-600);
+        --global-input-box-shadow: var(--global-color-primary-500-alpha-75);
+
+        --logo__path-1-fill: white;
+        --logo__path-2-fill: var(--logo__path-1-fill);
+        --logo__path-3-fill: var(--logo__path-1-fill);
+        
     }
 }
 
@@ -120,8 +139,8 @@ img {
 html {
     line-height: 1.5;
     font-family: "Inter Web", Helvetica, arial, sans-serif;
-    color: var(--global-color-neutral-950);
-    background-color: var(--global-color-neutral-050);
+    color: var(--global-input-color, var(--global-color-neutral-950));
+    background-color: var(--global-page-background, var(--global-color-neutral-050));
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -225,11 +244,11 @@ hr {
 }
 
 a {
-
+    text-decoration: none;
     &,
     &:visited {
         transition: all var(--global-transitionTiming-alpha);
-        color: var(--global-color-primary-500);
+        color: var(--global-link-color, var(--global-color-primary-500));
         outline-color: var(--global-link-BoxShadowColor);
         outline-width: medium;
         outline-offset: 2px;
@@ -237,7 +256,7 @@ a {
 
     &:hover,
     &:focus {
-        color: var(--global-color-primary-400);
+        color: var(--global-link-hover-focus-color, var(--global-color-primary-400));
     }
 
     &:active {
@@ -252,7 +271,7 @@ input {
 }
 
 input::placeholder {
-    color: var(--global-color-neutral-300);
+    color: var(--global-input-placeholder-color, var(--global-color-neutral-300));
 }
 
 /*------------------------------------*\
@@ -492,15 +511,15 @@ input::placeholder {
 }
 
 .c-logo__path--1 {
-    fill: var(--global-color-neutral-950);
+    fill: var(--logo__path-1-fill, var(--global-logo-path-1-color));
 }
 
 .c-logo__path--2 {
-    fill: var(--global-color-primary-500);
+    fill: var(--logo__path-2-fill, var(--global-color-primary-500));
 }
 
 .c-logo__path--3 {
-    fill: var(--global-color-primary-700);
+    fill: var(--logo__path-3-fill, var(--global-color-primary-700));
 }
 
 /*
@@ -510,7 +529,7 @@ input::placeholder {
 */
 
 .c-card {
-    background-color: White;
+    background-color: var(--global-card-background, white);
     margin-bottom: var(--global-whitespace);
     border-radius: var(--global-borderRadius);
     box-shadow: 0 0 0 var(--global-borderWidth) rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, .075);
@@ -525,7 +544,7 @@ input::placeholder {
 
 .c-card__footer {
     text-align: center;
-    border-top: var(--global-borderWidth) solid var(--global-color-neutral-100);
+    border-top: var(--global-borderWidth) solid var(--global-page-background, var(--global-color-neutral-100));
 }
 
 .c-card__title {
@@ -615,7 +634,7 @@ input::placeholder {
     font-size: .875rem;
     padding-bottom: var(--global-whitespace-xs);
     line-height: calc(var(--global-baseline) * 2);
-    color: var(--global-color-neutral-800);
+    color: var(--global-input-label-color, var(--global-color-neutral-800));
 }
 
 .c-label--option {
@@ -665,7 +684,7 @@ input::placeholder {
 .c-option--hidden:checked+.c-custom-option .c-custom-option__symbol {
     opacity: 1;
     transition: opacity .2s ease-in;
-    border-color: var(--global-color-primary-500-alpha-30);
+    border-color: var(--global-input-borderColor, var(--global-color-primary-500-alpha-30));
 }
 
 .c-option--hidden:focus+.c-custom-option .c-custom-option__fake-input {
@@ -693,6 +712,7 @@ input::placeholder {
 
 .c-custom-option__fake-input--checkbox {
     border-radius: var(--global-borderRadius);
+    background-color: var(--global-input-backgroundColor);
 }
 
 .c-custom-option__fake-input--radio {
@@ -716,16 +736,18 @@ input::placeholder {
     border-radius: 100%;
 }
 
-.c-option-list, .c-custom-toggle-list {
+.c-option-list,
+.c-custom-toggle-list {
     margin-bottom: 1.5rem;
 }
 
-.c-option-list__item, .c-custom-toggle-list__item {
+.c-option-list__item,
+.c-custom-toggle-list__item {
     margin-bottom: .75rem;
 }
 
 .c-custom-toggle__fake-input {
-    --toggle-background: var(--global-color-neutral-050);
+    --toggle-background: var(--global-page-color);
     display: block;
     width: 3rem;
     height: 1.5rem;
@@ -754,7 +776,7 @@ input::placeholder {
     border-radius: 100%;
     background-color: var(--global-input-backgroundColor);
     transition: all var(--transition-alpha);
-    
+
 }
 
 .c-option--hidden:active+.c-custom-toggle .c-custom-toggle__fake-input::after {}
@@ -763,7 +785,7 @@ input::placeholder {
 .c-option--hidden:checked+.c-custom-toggle .c-custom-toggle__fake-input {
     background-color: var(--global-color-primary-500-alpha-75);
     transition: all var(--transition-alpha);
-    
+
     &::after {
         transform: translateX(24px);
         border-color: var(--global-color-primary-500-alpha-75);
@@ -784,11 +806,12 @@ input::placeholder {
     border: var(--global-borderWidth) solid var(--global-input-borderColor);
     border-radius: var(--global-borderRadius);
     width: 100%;
-    
+
     &:active {
         border: var(--global-borderWidth) solid var(--global-input-borderColor);
         box-shadow: 0 0 0 3px var(--global-input-box-shadow);
     }
+
     &:focus {
         box-shadow: 0 0 0 3px var(--global-input-box-shadow);
         border: var(--global-borderWidth) solid var(--global-input-borderColor);
@@ -807,6 +830,7 @@ input::placeholder {
 .c-password-toggle-container {
     position: relative;
 }
+
 .c-password-toggle {
     position: absolute;
     right: 0;
